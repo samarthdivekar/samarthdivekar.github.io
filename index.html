@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Samarth Divekar — Cybersecurity · AI · Agents</title>
+  <meta name="description" content="Samarth Divekar: final-year Cybersecurity student at SSPU Pune. Penetration testing, AI-powered security engineering and agentic AI." />
+  <meta name="theme-color" content="#050505" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+      }
+    }
+  </script>
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+  <!-- Loader -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <p class="loader-name">Samarth <em>Divekar</em></p>
+    <div class="loader-bar"><span></span></div>
+    <div class="loader-meta"><span>Loading portfolio</span><span>Security · AI · Agents</span></div>
+    <p class="loader-pct"><span>0</span>%</p>
+  </div>
+
+  <!-- Background layers -->
+  <canvas id="scene" aria-hidden="true"></canvas>
+  <div class="grid-lines" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor" aria-hidden="true"><span class="cursor-dot"></span><span class="cursor-ring"></span></div>
+
+  <!-- Ticker -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span>Cybersecurity · SSPU Pune</span><b>✦</b><span>Penetration testing</span><b>✦</b><span>AI-powered security</span><b>✦</b><span>Agentic AI</span><b>✦</b><span>SIH 2026 · 17th of 200+</span><b>✦</b><span>Football</span><b>✦</b><span>Travel</span><b>✦</b><span>Open to roles</span><b>✦</b>
+      <span>Cybersecurity · SSPU Pune</span><b>✦</b><span>Penetration testing</span><b>✦</b><span>AI-powered security</span><b>✦</b><span>Agentic AI</span><b>✦</b><span>SIH 2026 · 17th of 200+</span><b>✦</b><span>Football</span><b>✦</b><span>Travel</span><b>✦</b><span>Open to roles</span><b>✦</b>
+    </div>
+  </div>
+
+  <header class="nav" id="nav">
+    <a class="brand" href="#intro">Samarth Divekar<sup>©26</sup></a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="#security">Security</a>
+      <a href="#ai">AI</a>
+      <a href="#agents">Agents</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#work">Work</a>
+      <a href="#football">Life</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="resume-btn" href="Samarth_Divekar_Resume.pdf" download="Samarth_Divekar_Resume.pdf">Résumé <span aria-hidden="true">↓</span></a>
+  </header>
+
+  <aside class="hud" aria-hidden="true">
+    <span class="hud-num">00</span><span class="hud-total">/08</span>
+    <span class="hud-label">Intro</span>
+  </aside>
+
+  <main>
+    <!-- ───────── 00 · INTRO (sphere, centre) ───────── -->
+    <section id="intro" class="intro" data-label="Intro">
+      <div class="intro-top container">
+        <p class="mono">(Portfolio — 2026)</p>
+        <p class="mono status"><i></i>Open to internships &amp; full-time roles</p>
+      </div>
+      <div class="intro-bottom container">
+        <h1 class="giant">
+          <span class="mask"><span>Samarth</span></span>
+          <span class="mask line-2"><em>Divekar</em></span>
+        </h1>
+        <div class="intro-meta">
+          <p class="intro-bio">
+            Final-year Cybersecurity student at SSPU Pune. I break into systems to secure them, and
+            build AI that makes security smarter.
+          </p>
+          <a class="resume-pill" href="Samarth_Divekar_Resume.pdf" download="Samarth_Divekar_Resume.pdf">Download résumé <span aria-hidden="true">↓</span></a>
+          <p class="mono clock" data-tz="Asia/Kolkata"><span>Pune, IN</span> <span class="clock-time">--:--</span></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────── 01 · SECURITY (padlock left · text right) ───────── -->
+    <section id="security" class="chapter pos-right" data-label="Security">
+      <div class="container">
+        <div class="chapter-text">
+          <p class="chapter-index mono reveal"><span>01</span> Cybersecurity</p>
+          <h2 class="headline reveal">I break things to learn how to <em>secure</em> them.</h2>
+          <p class="body reveal">
+            Three internships of real-world penetration testing, vulnerability assessment and security
+            audits. I score every finding against CVSS, map it to the OWASP Top 10 and turn it into a fix
+            teams can act on.
+          </p>
+          <ul class="tags mono reveal"><li>Pen testing</li><li>Burp Suite</li><li>Metasploit</li><li>Nmap</li><li>Wireshark</li><li>CVSS · OWASP</li></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────── 02 · AI (chip right · text left) ───────── -->
+    <section id="ai" class="chapter" data-label="AI">
+      <div class="container">
+        <div class="chapter-text">
+          <p class="chapter-index mono reveal"><span>02</span> AI &amp; machine learning</p>
+          <h2 class="headline reveal">Making security <em>smarter</em> with AI.</h2>
+          <p class="body reveal">
+            LLM integration, RAG and AI-powered compliance automation, from a self-hosted vLLM on a
+            private AWS VPC to a classifier that routes queries to the right-sized model.
+          </p>
+          <ul class="tags mono reveal"><li>LLM integration</li><li>RAG</li><li>vLLM</li><li>Prompt engineering</li><li>Python</li></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────── 03 · AGENTS (network left · text right) ───────── -->
+    <section id="agents" class="chapter pos-right" data-label="Agents">
+      <div class="container">
+        <div class="chapter-text">
+          <p class="chapter-index mono reveal"><span>03</span> Agentic AI</p>
+          <h2 class="headline reveal">Agents that <em>plan</em>, act and stay secure.</h2>
+          <p class="body reveal">
+            Agentic workflows that reason, call tools and hand off work, built on solid backends
+            (Node.js, TypeScript, FastAPI, Redis) with access control designed in from day one.
+          </p>
+          <ul class="tags mono reveal"><li>Agentic workflows</li><li>Tool use</li><li>FastAPI</li><li>TypeScript</li><li>BullMQ · Redis</li></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────── 04 · SKILLS ───────── -->
+    <!-- ✏️ Edit the lists below: five groups, one column each. -->
+    <section id="skills" class="skills" data-label="Skills">
+      <div class="container skills-head">
+        <p class="chapter-index mono reveal"><span>04</span> Skills</p>
+        <h2 class="skills-title reveal">Everything I <em>build</em> with.</h2>
+      </div>
+      <div class="container skills-grid">
+        <div class="skill-group reveal">
+          <h3>Security</h3>
+          <ul><li>Penetration testing</li><li>Vulnerability assessment</li><li>Threat analysis</li><li>Burp Suite</li><li>Metasploit</li><li>Nmap</li><li>Wireshark</li><li>CVSS · OWASP Top 10</li></ul>
+        </div>
+        <div class="skill-group reveal">
+          <h3>AI &amp; ML</h3>
+          <ul><li>LLM integration</li><li>RAG systems</li><li>Prompt engineering</li><li>Agentic workflows</li><li>AI compliance automation</li></ul>
+        </div>
+        <div class="skill-group reveal">
+          <h3>Languages</h3>
+          <ul><li>Python</li><li>JavaScript</li><li>TypeScript</li><li>Node.js</li><li>C</li><li>SQL</li><li>HTML · CSS</li></ul>
+        </div>
+        <div class="skill-group reveal">
+          <h3>Cloud &amp; infra</h3>
+          <ul><li>AWS (VPC · IAM)</li><li>Docker</li><li>Git · GitHub</li><li>REST APIs</li><li>Linux</li><li>Windows</li></ul>
+        </div>
+        <div class="skill-group reveal">
+          <h3>Frameworks &amp; data</h3>
+          <ul><li>Flask</li><li>FastAPI</li><li>Express</li><li>React</li><li>Prisma</li><li>PostgreSQL</li><li>MongoDB</li><li>Redis · BullMQ</li></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────── 05 · EXPERIENCE (helix left · timeline right) ───────── -->
+    <section id="experience" class="experience" data-label="Experience">
+      <div class="container experience-grid">
+        <div class="experience-spacer" aria-hidden="true"></div>
+        <div class="experience-body">
+          <p class="chapter-index mono reveal"><span>05</span> Experience</p>
+          <h2 class="section-title reveal">Where I've <em>worked</em></h2>
+
+          <ol class="timeline">
+            <li class="reveal">
+              <p class="mono">Jun 2026 — Jul 2026 · BinQrypt Security</p>
+              <h3>Product Development Lead &amp; Backend Lead</h3>
+              <p>Led backend and database work on DPDPA InfraMap across a 14-table multi-tenant schema, fixed a cross-tenant data-isolation flaw spanning 6 tables, and moved access control from 3 ranked roles to a 5-role permission matrix.</p>
+            </li>
+            <li class="reveal">
+              <p class="mono">Jun 2025 — Aug 2025 · BinQrypt Security</p>
+              <h3>Penetration Testing Intern</h3>
+              <p>Ran real-world penetration tests on web apps and network infrastructure, scored every finding against CVSS and wrote the technical reports clients used to prioritise fixes.</p>
+            </li>
+            <li class="reveal">
+              <p class="mono">Jun 2024 — Aug 2024 · Technomind Machine Automation</p>
+              <h3>Cybersecurity &amp; Web Development Intern</h3>
+              <p>Audited the company's web properties for common attack vectors and delivered prioritised recommendations that were adopted to harden them.</p>
+            </li>
+          </ol>
+
+          <div class="recognition">
+            <div class="reveal">
+              <p class="mono label">Awards</p>
+              <ul>
+                <li><b>Special Award · ₹20,000</b> INDRADHANU International Grand Challenge (Top 5)</li>
+                <li><b>SIH 2026</b> Ranked 17th of 200+ teams, university level</li>
+                <li><b>SIH 2025</b> Top 5 at university, advanced to national selection</li>
+                <li><b>SIH 2023</b> Second-round selectee, top 50 nationally</li>
+              </ul>
+            </div>
+            <div class="reveal">
+              <p class="mono label">Certifications</p>
+              <ul>
+                <li><b>Mastercard</b> Cybersecurity Job Simulation</li>
+                <li><b>TCS</b> Cybersecurity Analyst Job Simulation</li>
+                <li><b>Deloitte Australia</b> Cyber Job Simulation</li>
+              </ul>
+              <p class="mono label edu-label">Education</p>
+              <ul>
+                <li><b>B.Tech CS &amp; IT (Cyber Security)</b> SSPU Pune · 2023 – 2027 · CGPA 8.5</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────── 05 · WORK (dust) ───────── -->
+    <section id="work" class="work" data-label="Work">
+      <div class="container">
+        <div class="work-head">
+          <h2 class="section-title reveal">Selected <em>work</em></h2>
+          <p class="mono reveal">(05 projects)</p>
+        </div>
+        <!-- ✏️ Add a link for each project in href="#" (GitHub, demo or write-up) -->
+        <ol class="rows">
+          <li class="reveal"><a class="row" href="https://github.com/samarthdivekar" target="_blank" rel="noopener">
+            <span class="row-num mono">01</span>
+            <span class="row-title">DPDPA InfraMap</span>
+            <span class="row-desc">AI-powered DPDPA 2023 compliance-gap analyzer: multi-tenant backend with a self-hosted vLLM</span>
+            <span class="row-tags mono">Node.js · Prisma · AWS</span>
+            <span class="row-year mono">2026</span>
+            <span class="row-arrow" aria-hidden="true">↗</span>
+          </a></li>
+          <li class="reveal"><a class="row" href="https://github.com/samarthdivekar" target="_blank" rel="noopener">
+            <span class="row-num mono">02</span>
+            <span class="row-title">FLOState</span>
+            <span class="row-desc">Water- and carbon-aware AI compute orchestration, built for Smart India Hackathon 2026</span>
+            <span class="row-tags mono">Python · LLM routing</span>
+            <span class="row-year mono">2026</span>
+            <span class="row-arrow" aria-hidden="true">↗</span>
+          </a></li>
+          <li class="reveal"><a class="row" href="https://github.com/samarthdivekar" target="_blank" rel="noopener">
+            <span class="row-num mono">03</span>
+            <span class="row-title">QuantumMail</span>
+            <span class="row-desc">Post-quantum secure mail client: Kyber512, Dilithium2 and AES-GCM, with phishing detection</span>
+            <span class="row-tags mono">Python · OQS</span>
+            <span class="row-year mono">2025</span>
+            <span class="row-arrow" aria-hidden="true">↗</span>
+          </a></li>
+          <li class="reveal"><a class="row" href="https://github.com/samarthdivekar" target="_blank" rel="noopener">
+            <span class="row-num mono">04</span>
+            <span class="row-title">VulnScan Pro</span>
+            <span class="row-desc">"Mini-Nessus": a 13-module web vulnerability scanner with automated SQLi/XSS testing</span>
+            <span class="row-tags mono">Python · OWASP</span>
+            <span class="row-year mono">2025</span>
+            <span class="row-arrow" aria-hidden="true">↗</span>
+          </a></li>
+          <li class="reveal"><a class="row" href="https://github.com/samarthdivekar" target="_blank" rel="noopener">
+            <span class="row-num mono">05</span>
+            <span class="row-title">OceanMind AI</span>
+            <span class="row-desc">Ocean-insights platform fusing satellite and IoT data. Special Award, Top 5 of 1,000+ teams</span>
+            <span class="row-tags mono">Data fusion · ML</span>
+            <span class="row-year mono">2025</span>
+            <span class="row-arrow" aria-hidden="true">↗</span>
+          </a></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ───────── 06 · FOOTBALL (a bouncing ball you can kick, over centred text) ───────── -->
+    <section id="football" class="chapter pos-center" data-label="Football">
+      <div class="container">
+        <div class="chapter-text">
+          <p class="chapter-index mono reveal"><span>06</span> Off the keyboard</p>
+          <h2 class="headline reveal">Weekends belong to <em>football</em>.</h2>
+          <p class="body reveal">
+            The pitch taught me what no course could: read the game, stay calm under pressure and play
+            for the people next to you. Same energy I bring to every hackathon team.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────── 07 · CONTACT (sphere) ───────── -->
+    <section id="contact" class="contact" data-label="Contact">
+      <div class="container contact-inner">
+        <p class="mono reveal">(Hiring for security or AI roles?)</p>
+        <h2 class="contact-title reveal">Let's <em>talk</em>.</h2>
+        <a class="email reveal" href="mailto:samarthdivekar17@gmail.com">samarthdivekar17@gmail.com</a>
+        <ul class="socials mono reveal">
+          <li><a href="https://github.com/samarthdivekar" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://www.linkedin.com/in/samarth-divekar/" target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
+        <a class="resume-pill big reveal" href="Samarth_Divekar_Resume.pdf" download="Samarth_Divekar_Resume.pdf">Download résumé <span aria-hidden="true">↓</span></a>
+      </div>
+      <footer class="container footer mono">
+        <span>© <span id="year"></span> Samarth Divekar</span>
+        <span>Pune, India · Security · AI · Agents</span>
+        <a href="#intro">Back to top ↑</a>
+      </footer>
+    </section>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>
