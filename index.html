@@ -10,6 +10,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+  <!-- older phone browsers (iOS < 16.4) don't understand import maps: load a shim first -->
+  <script>
+    window.__esmShim = !(window.HTMLScriptElement && HTMLScriptElement.supports && HTMLScriptElement.supports('importmap'));
+    if (window.__esmShim) {
+      window.esmsInitOptions = { shimMode: false };
+      document.write('<script src="https://cdn.jsdelivr.net/npm/es-module-shims@1.10.1/dist/es-module-shims.js"><\/script>');
+    }
+  </script>
   <script type="importmap">
     {
       "imports": {
@@ -56,7 +64,28 @@
       <a href="#contact">Contact</a>
     </nav>
     <a class="resume-btn" href="Samarth_Divekar_Resume.pdf" download="Samarth_Divekar_Resume.pdf">Résumé <span aria-hidden="true">↓</span></a>
+    <button class="menu-btn" id="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu">
+      <span></span><span></span>
+    </button>
   </header>
+
+  <!-- full-screen menu, phones only -->
+  <div class="menu" id="menu" hidden>
+    <nav class="menu-links" aria-label="Sections">
+      <a href="#security"><i>01</i> Security</a>
+      <a href="#ai"><i>02</i> AI</a>
+      <a href="#agents"><i>03</i> Agents</a>
+      <a href="#skills"><i>04</i> Skills</a>
+      <a href="#experience"><i>05</i> Experience</a>
+      <a href="#work"><i>06</i> Work</a>
+      <a href="#football"><i>07</i> Life</a>
+      <a href="#contact"><i>08</i> Contact</a>
+    </nav>
+    <div class="menu-foot">
+      <a class="resume-pill" href="Samarth_Divekar_Resume.pdf" download="Samarth_Divekar_Resume.pdf">Download résumé <span aria-hidden="true">↓</span></a>
+      <a class="menu-mail" href="mailto:samarthdivekar17@gmail.com">samarthdivekar17@gmail.com</a>
+    </div>
+  </div>
 
   <aside class="hud" aria-hidden="true">
     <span class="hud-num">00</span><span class="hud-total">/08</span>

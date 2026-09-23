@@ -11,6 +11,13 @@
 const AI_SHAPE = 'chip';
 
 (async () => {
+  // resolves to a bare-specifier importer once es-module-shims has loaded
+  async function waitForShim() {
+    for (let i = 0; i < 100 && !window.importShim; i++) await new Promise((r) => setTimeout(r, 50));
+    if (!window.importShim) throw new Error('import maps unsupported and the shim never loaded');
+    return (spec) => window.importShim(spec);
+  }
+
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const finePointer = window.matchMedia('(pointer: fine)').matches;
   const debug = location.search.includes('debug');
@@ -20,6 +27,7 @@ const AI_SHAPE = 'chip';
   initCursor();
   initReveal();
   initNav();
+  initMenu();
   const yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
   document.fonts?.ready.then(() => loader.set(30));
@@ -27,12 +35,14 @@ const AI_SHAPE = 'chip';
   /* ───────────────────────── Three.js ───────────────────────── */
   let THREE, EffectComposer, RenderPass, UnrealBloomPass, OutputPass;
   try {
+    // older phone browsers (iOS < 16.4) have no import maps; es-module-shims fills in
+    const imp = window.__esmShim ? await waitForShim() : (spec) => import(spec);
     const mods = await Promise.all([
-      import('three'),
-      import('three/addons/postprocessing/EffectComposer.js'),
-      import('three/addons/postprocessing/RenderPass.js'),
-      import('three/addons/postprocessing/UnrealBloomPass.js'),
-      import('three/addons/postprocessing/OutputPass.js'),
+      imp('three'),
+      imp('three/addons/postprocessing/EffectComposer.js'),
+      imp('three/addons/postprocessing/RenderPass.js'),
+      imp('three/addons/postprocessing/UnrealBloomPass.js'),
+      imp('three/addons/postprocessing/OutputPass.js'),
     ]);
     THREE = mods[0];
     ({ EffectComposer } = mods[1]);
@@ -41,6 +51,7 @@ const AI_SHAPE = 'chip';
     ({ OutputPass } = mods[4]);
   } catch (err) {
     console.warn('Could not load Three.js.', err);
+    document.body.classList.add('no-3d');
     loader.set(100);
     return;
   }
@@ -51,6 +62,8 @@ const AI_SHAPE = 'chip';
   try {
     renderer = new THREE.WebGLRenderer({ canvas, antialias: false, powerPreference: 'high-performance' });
   } catch (err) {
+    console.warn('No WebGL on this device.', err);
+    document.body.classList.add('no-3d');
     loader.set(100);
     return;
   }
@@ -65,19 +78,40 @@ const AI_SHAPE = 'chip';
   camera.position.z = CAM_Z;
 
   // soft glow on everything bright
-  const composer = new EffectComposer(renderer);
-  composer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
-  composer.setSize(innerWidth, innerHeight);
-  composer.addPass(new RenderPass(scene, camera));
-  const bloom = new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), 0.55, 0.35, 0.42);
-  composer.addPass(bloom);
-  composer.addPass(new OutputPass());
+  let composer = null, bloom = null;
+  try {
+    composer = new EffectComposer(renderer);
+    composer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+    composer.setSize(innerWidth, innerHeight);
+    composer.addPass(new RenderPass(scene, camera));
+    const small = innerWidth <= 900;
+    bloom = new UnrealBloomPass(
+      new THREE.Vector2(innerWidth, innerHeight),
+      small ? 0.3 : 0.55,   // strength
+      small ? 0.18 : 0.35,  // radius
+      small ? 0.62 : 0.42,  // threshold
+    );
+    composer.addPass(bloom);
+    composer.addPass(new OutputPass());
+  } catch (err) {
+    console.warn('Glow pass unavailable; drawing without it.', err);
+    composer = null;
+  }
+
+  // one draw call: with the glow pass while it works, plain otherwise
+  const draw = () => {
+    if (composer) {
+      try { composer.render(); return; }
+      catch (err) { console.warn('Glow pass failed; drawing without it.', err); composer = null; }
+    }
+    renderer.render(scene, camera);
+  };
 
   /* ───────────────────────── Shapes ─────────────────────────
    * Every shape is N points stored as (x, y, z, w).
    * w = brightness (0..1); a negative w marks an accent-coloured point.
    */
-  const N = innerWidth <= 900 ? 12000 : 28000;
+  const N = innerWidth <= 560 ? 9000 : innerWidth <= 900 ? 12000 : 28000;
   const TAU = Math.PI * 2;
   const rnd = Math.random;
   const randDir = () => {
@@ -566,7 +600,7 @@ const AI_SHAPE = 'chip';
   const uniforms = {
     uStage: { value: 0 },
     uTime: { value: 0 },
-    uSize: { value: innerWidth <= 900 ? 13 : 10 },
+    uSize: { value: innerWidth <= 900 ? 10.5 : 10 },
     uPR: { value: renderer.getPixelRatio() },
     uAlpha: { value: 1 },
     uMouse: { value: new THREE.Vector2(9, 9) },
@@ -732,9 +766,9 @@ const AI_SHAPE = 'chip';
   // ring: how visible the orbiting dust ring is (0 = hidden)
   const LAYOUT = [
     { xf: 0.38, yf: 0.18, s: 1.02, a: 1, ring: 1, spin: 0.12, tilt: 0.15, m: { xf: 0, yf: 0.34, s: 0.62 } },      // intro · sphere, top-right
-    { xf: -0.4, yf: 0, s: 1.2, a: 1, ring: 0.9, spin: 0.22, tilt: 0.1, m: { xf: 0, yf: 0.5, s: 0.62 } },         // security · padlock, left
-    { xf: 0.4, yf: 0, s: 1.7, a: 1, ring: 0.5, spin: 0.16, tilt: 0.3, m: { xf: 0, yf: 0.5, s: 0.7 } },           // ai · chip, right of the text
-    { xf: -0.4, yf: 0, s: 1.0, a: 1, ring: 0, spin: 0.25, tilt: 0.2, m: { xf: 0, yf: 0.5, s: 0.6 } },            // agents · left of the text
+    { xf: -0.4, yf: 0, s: 1.2, a: 1, ring: 0.9, spin: 0.22, tilt: 0.1, m: { xf: 0, yf: 0.46, s: 0.58 } },        // security · padlock, left
+    { xf: 0.4, yf: 0, s: 1.7, a: 1, ring: 0.5, spin: 0.16, tilt: 0.3, m: { xf: 0, yf: 0.44, s: 0.5 } },          // ai · chip, right of the text
+    { xf: -0.4, yf: 0, s: 1.0, a: 1, ring: 0, spin: 0.25, tilt: 0.2, m: { xf: 0, yf: 0.46, s: 0.56 } },         // agents · left of the text
     { xf: 0, yf: 0, s: 1.7, a: 0.2, ring: 0, spin: 0.02, tilt: 0, m: { s: 1.3, a: 0.16 } },                                  // skills · faint dust behind the tree
     { xf: -0.52, yf: 0, s: 1.15, a: 1, ring: 0, spin: 0.35, tilt: 0.05, m: { xf: 0, yf: 0.05, s: 0.7, a: 0.3 } }, // experience · helix, left
     { xf: 0, yf: 0, s: 1, a: 0.45, ring: 0, spin: 0.02, tilt: 0, m: {} },                                          // work · dust
@@ -808,7 +842,7 @@ const AI_SHAPE = 'chip';
     camera.aspect = innerWidth / innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(innerWidth, innerHeight, false);
-    composer.setSize(innerWidth, innerHeight);
+    composer?.setSize(innerWidth, innerHeight);
     uniforms.uAspect.value = camera.aspect;
     uniforms.uPR.value = renderer.getPixelRatio();
   });
@@ -932,7 +966,7 @@ const AI_SHAPE = 'chip';
       hudNum.textContent = String(nearest).padStart(2, '0');
       hudLabel.textContent = sections[nearest]?.dataset.label || '';
     }
-    composer.render();
+    draw();
   }
 
   /* ───────────────────────── UI helpers ───────────────────────── */
@@ -1008,6 +1042,32 @@ const AI_SHAPE = 'chip';
       });
     }, { threshold: 0.2, rootMargin: '0px 0px -40px 0px' });
     document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+  }
+
+  // full-screen menu on phones
+  function initMenu() {
+    const btn = document.getElementById('menu-btn');
+    const menu = document.getElementById('menu');
+    if (!btn || !menu) return;
+    let open = false;
+    const set = (v) => {
+      open = v;
+      btn.setAttribute('aria-expanded', String(v));
+      btn.setAttribute('aria-label', v ? 'Close menu' : 'Open menu');
+      if (v) {
+        menu.hidden = false;
+        void menu.offsetWidth; // force a layout pass so the fade actually runs
+        document.body.classList.add('menu-open');
+      } else {
+        document.body.classList.remove('menu-open');
+        setTimeout(() => { if (!open) menu.hidden = true; }, 400);
+      }
+    };
+    btn.addEventListener('click', () => set(!open));
+    menu.addEventListener('click', (e) => { if (e.target.closest('a')) set(false); });
+    window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && open) set(false); });
+    // a phone rotated to landscape gets the desktop bar back
+    matchMedia('(min-width: 901px)').addEventListener('change', (e) => { if (e.matches && open) set(false); });
   }
 
   function initNav() {
